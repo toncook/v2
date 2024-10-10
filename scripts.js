@@ -353,50 +353,18 @@ function formatUserId(userId) {
   return userIdStr;
 }
 
-if (user) {
-  const formattedUserName = formatUserName(user.username);
-  const formattedUserId = formatUserId(user.id);
-
-  document.getElementById(
-    "userInfo"
-  ).innerHTML = `${formattedUserName} (Id:<strong>${formattedUserId}</strong>)`;
-
-  const copyIcon = document.getElementById("copyIcon");
-  const copyPopup = document.getElementById("copyPopup");
-
-  copyIcon.addEventListener("click", () => {
-    // Copy user ID to clipboard
-    navigator.clipboard
-      .writeText(user.id.toString())
-      .then(() => {
-        // Show tooltip
-        copyPopup.style.visibility = "visible";
-        copyPopup.style.opacity = 1;
-        // Hide tooltip after 2 seconds
-        setTimeout(() => {
-          copyPopup.style.visibility = "hidden";
-          copyPopup.style.opacity = 0;
-        }, 2000);
-      })
-      .catch((err) => {
-        console.error("Failed to copy text: ", err);
-      });
-  });
-} else {
-  document.getElementById("userInfo").innerText = "User information not found";
-  document.getElementById("copyIcon").style.display = "none";
-}
-
 // MAIN RUN
 
 //
 document.addEventListener("DOMContentLoaded", async () => {
-  move();
-  // navigateTo("home");
-  countdown("October 17, 2024 23:59:59");
   // Init TWA
   Telegram.WebApp.ready();
   Telegram.WebApp.expand(); // Mini App is expanded to the maximum height
+
+  // move();
+
+  navigateTo("home");
+  countdown("October 17, 2024 23:59:59");
 
   document.getElementById("getTicketButton").addEventListener("click", () => {
     const amountToSend = 2;
@@ -406,6 +374,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 //
 window.addEventListener("load", async () => {
+  if (user) {
+    const formattedUserName = formatUserName(user.username);
+    const formattedUserId = formatUserId(user.id);
+
+    document.getElementById(
+      "userInfo"
+    ).innerHTML = `${formattedUserName} (Id:<strong>${formattedUserId}</strong>)`;
+
+    const copyIcon = document.getElementById("copyIcon");
+    const copyPopup = document.getElementById("copyPopup");
+
+    copyIcon.addEventListener("click", () => {
+      // Copy user ID to clipboard
+      navigator.clipboard
+        .writeText(user.id.toString())
+        .then(() => {
+          // Show tooltip
+          copyPopup.style.visibility = "visible";
+          copyPopup.style.opacity = 1;
+          // Hide tooltip after 2 seconds
+          setTimeout(() => {
+            copyPopup.style.visibility = "hidden";
+            copyPopup.style.opacity = 0;
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    });
+  } else {
+    document.getElementById("userInfo").innerText =
+      "User information not found";
+    document.getElementById("copyIcon").style.display = "none";
+  }
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
