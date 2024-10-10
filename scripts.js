@@ -221,6 +221,7 @@ function maskTicket(ticket) {
 function displayTicket(ticket) {
   document.getElementById("ticket").style.display = "block";
   document.getElementById("ticketSub").style.display = "block";
+  console.log("trong hàm dis: ", ticket);
 
   //xu ly nut copy ticket code
   const copyTicketCode = document.getElementById("copyTicketCode");
@@ -440,6 +441,8 @@ window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
+    console.log("phia duoi:", userData.ticket);
+
     displayTicket(userData.ticket);
     document.getElementById("getTicketButton").style.display = "none";
     document.getElementById("countdown").style.display = "none";
