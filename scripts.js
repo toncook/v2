@@ -31,10 +31,10 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
   buttonRootId: "ton-connect",
 });
 
-// Lắng nghe sự kiện thay đổi trạng thái kết nối ví
+//  Listen for wallet connection status change events
 tonConnectUI.onStatusChange(async (walletInfo) => {
   if (walletInfo) {
-    // Lấy địa chỉ ví và gọi API để lấy số dư
+    // Get wallet address and call API to get balance
     try {
       const balance = await getTonBalance(walletInfo.account.address);
       document.getElementById(
@@ -52,7 +52,7 @@ tonConnectUI.onStatusChange(async (walletInfo) => {
   }
 });
 
-// Hàm lấy số dư ví TON
+// Function to get TON wallet balance
 async function getTonBalance(walletAddress) {
   const apiKey =
     "9ae89b79b77bf166ebfb16283bb339cbf428d2c579b56fc7a6372a6ba0490caa";
@@ -62,29 +62,27 @@ async function getTonBalance(walletAddress) {
   const data = await response.json();
 
   if (data && data.result) {
-    // Chuyển nanoton sang Toncoin
+    // nanoton to Toncoin
     return data.result.balance / 1e9;
   } else {
     throw new Error("Failed to fetch wallet balance.");
   }
 }
 
-// Hàm kiểm tra và gửi Toncoin
+// Function to check and send Toncoin
 async function sendToncoin(amount) {
   const getTicketInfo = document.getElementById("getTicketInfo");
 
   if (tonConnectUI.connected) {
-    // NẾU VÍ ĐÃ KẾT NỐI
+    //  IF THE WALLET IS CONNECTED
     const walletInfo = tonConnectUI.wallet;
-    const walletAddress = walletInfo.account.address; // Lấy địa chỉ ví
+    const walletAddress = walletInfo.account.address;
 
     try {
-      // Lấy số dư ví
       const balance = await getTonBalance(walletAddress);
 
-      // Kiểm tra xem số dư có đủ để gửi không
       if (balance >= amount) {
-        // Nếu đủ số dư, tiến hành thanh toán
+        //  If sufficient balance, proceed with payment
         await sendTransaction(amount);
         getTicketInfo.innerText = `Transaction successful! Sent ${amount} TON.`;
         // Show tooltip
@@ -96,7 +94,7 @@ async function sendToncoin(amount) {
           getTicketInfo.style.opacity = 0;
         }, 3000);
       } else {
-        // Nếu không đủ số dư, hiển thị thông báo
+        // If insufficient balance, display message
         getTicketInfo.innerText = `Insufficient balance! You have ${balance.toFixed(
           2
         )} TON but need ${amount} TON.`;
@@ -122,7 +120,7 @@ async function sendToncoin(amount) {
       }, 3000);
     }
   } else {
-    // NẾU VÍ CHƯA ĐƯỢC KẾT NỐI
+    //  IF THE WALLET IS NOT CONNECTED
     getTicketInfo.innerText = "Please connect wallet first!";
     // Show tooltip
     getTicketInfo.style.visibility = "visible";
@@ -136,11 +134,9 @@ async function sendToncoin(amount) {
 }
 
 // Function to send transaction
-const destination1 = "UQDIpMMwdw7x4XhQnwyNVo_4MJONGHRDLDqIGIzmW4C9yX9I"; //toncookv2 mainnet test 1
-const destination2 =
-  "0:362f48cace858bea08d0c00b3ec2a37342b0692d2950f95d19e863cf29d6230b"; //ToTo testnet
+const destination = "UQCkanhhAMYn2csMdxpaXDMC1n33u1nT1SUGgVvpYrIU-CC2"; //toncookv2 mainnet
 
-// Gửi Toncoin sau khi kiểm tra đủ số dư
+//
 async function sendTransaction(amount) {
   const userId = user.id.toString();
   const username = user.username;
@@ -149,8 +145,8 @@ async function sendTransaction(amount) {
       validUntil: Math.floor(Date.now() / 1000) + 360,
       messages: [
         {
-          address: destination1, // Địa chỉ mainnet
-          amount: (amount * 1e9).toString(), // Chuyển Toncoin sang nanoton
+          address: destination,
+          amount: (amount * 1e9).toString(),
         },
       ],
     };
@@ -158,7 +154,7 @@ async function sendTransaction(amount) {
     const result = await tonConnectUI.sendTransaction(transaction);
     console.log("Transaction result:", result);
 
-    // Kiểm tra chi tiết giao dịch để xem có xảy ra bounce không
+    // check bounce
     if (result && result.bounced) {
       console.log("Transaction bounced. Funds were returned.");
     }
@@ -172,22 +168,21 @@ async function sendTransaction(amount) {
 // FUNCTIONS FIREBASE
 // Function to check if a user with a specific ID exists in Firestore
 async function checkUserExists(userId) {
-  const docRef = doc(db, "users", userId); // Lấy reference tới tài liệu với DocID là userId
+  const docRef = doc(db, "users", userId); //  reference DocID is userId
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
     console.log("User exists:", docSnap.data());
-    return docSnap.data(); // Trả về dữ liệu người dùng nếu tài liệu tồn tại
+    return docSnap.data(); // if exits
   } else {
     console.log("No such user!");
-    return null; // Trả về null nếu không tìm thấy tài liệu
+    return null; // if no exits
   }
 }
 
 // Function to create a new user document
 async function createNewUser(userId, username) {
   try {
-    // Tạo một vé ngẫu nhiên
     const ticket = generateRandomTicket();
     console.log(ticket);
     await setDoc(doc(db, "users", userId), {
@@ -199,11 +194,6 @@ async function createNewUser(userId, username) {
     displayTicket(ticket);
     document.getElementById("getTicketButton").style.display = "none";
     document.getElementById("countdown").style.display = "none";
-
-    // // Lưu vé vào Local Storage
-    // localStorage.setItem(`ticket_${userId}`, ticket);
-    // displayTicket(ticket);
-    // console.log("Ticket saved to Local Storage:", ticket);
   } catch (error) {
     console.error("Error creating new user:", error);
   }
@@ -222,12 +212,12 @@ function generateRandomTicket() {
   return ticket;
 }
 
-// Hàm để che dấu ticket
+// Function to mask the ticket
 function maskTicket(ticket) {
   return ticket[0] + "****" + ticket[ticket.length - 1];
 }
 
-// Hàm để hiển thị ticket với nút toggle
+// Function to display the ticket with toggle button
 function displayTicket(ticket) {
   document.getElementById("ticket").style.display = "block";
   document.getElementById("ticketSub").style.display = "block";
@@ -258,27 +248,26 @@ function displayTicket(ticket) {
   document.getElementById("ticket").innerText = "";
   const ticketElement = document.getElementById("ticket");
   const ticketText = document.createElement("span");
-  const toggleIcon = document.createElement("i"); // Sử dụng thẻ <i> cho biểu tượng Font Awesome
+  const toggleIcon = document.createElement("i");
   let isMasked = true;
 
   const updateTicketDisplay = () => {
     ticketText.innerText = `${isMasked ? maskTicket(ticket) : ticket}`;
-    toggleIcon.className = isMasked ? "fas fa-eye" : "fas fa-eye-slash"; // Sử dụng Font Awesome classes
-  };
+    toggleIcon.className = isMasked ? "fas fa-eye" : "fas fa-eye-slash";
 
-  toggleIcon.style.cursor = "pointer";
-  toggleIcon.style.marginRight = "10px"; // Thêm khoảng cách giữa text và biểu tượng
-  toggleIcon.addEventListener("click", () => {
-    isMasked = !isMasked;
+    toggleIcon.style.cursor = "pointer";
+    toggleIcon.style.marginRight = "10px";
+    toggleIcon.addEventListener("click", () => {
+      isMasked = !isMasked;
+      updateTicketDisplay();
+    });
+
     updateTicketDisplay();
-  });
-
-  updateTicketDisplay();
-  ticketElement.appendChild(toggleIcon);
-  ticketElement.appendChild(ticketText);
+    ticketElement.appendChild(toggleIcon);
+    ticketElement.appendChild(ticketText);
+  };
 }
-
-// Hàm hiển thị 1 section và ẩn tất cá các section khác
+// Function to display one section and hide all other sections
 function navigateTo(sectionId) {
   document.querySelectorAll("#container > div").forEach((div) => {
     div.style.display = "none";
@@ -311,18 +300,17 @@ function move() {
 function countdown(targetTime) {
   const countdownElement = document.getElementById("countdown");
 
-  // Hàm cập nhật mỗi giây
   const interval = setInterval(() => {
-    // Lấy thời gian hiện tại
+    //
     const now = new Date().getTime();
 
-    // Lấy thời gian đích
+    //
     const target = new Date(targetTime).getTime();
 
-    // Tính toán khoảng cách thời gian giữa hiện tại và thời gian đích
+    //
     const distance = target - now;
 
-    // Tính số ngày, giờ, phút và giây
+    //
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -330,24 +318,23 @@ function countdown(targetTime) {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Định dạng hiển thị
+    //
     const result = `End: ${days} day, ${hours
       .toString()
       .padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
 
-    // Cập nhật nội dung vào thẻ div
+    //
     countdownElement.textContent = result;
 
-    // Nếu đếm ngược kết thúc
+    //
     if (distance < 0) {
       clearInterval(interval);
       countdownElement.textContent = "Countdown finished!";
     }
-  }, 1000); // Cập nhật mỗi giây
+  }, 1000);
 }
-
 // Get user ID and user FirstName
 const user = Telegram.WebApp.initDataUnsafe.user;
 
@@ -402,7 +389,7 @@ if (user) {
 
 // MAIN RUN
 
-// Khi các DOM được dựng xong, thì khởi tạo ứng dụng với phần Home hiển thị
+//
 document.addEventListener("DOMContentLoaded", async () => {
   // move();
   navigateTo("home");
@@ -411,14 +398,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   Telegram.WebApp.ready();
   Telegram.WebApp.expand(); // Mini App is expanded to the maximum height
 
-  // Gán sự kiện click cho nút trong module
   document.getElementById("getTicketButton").addEventListener("click", () => {
-    const amountToSend = 0.2; // Ví dụ số tiền cần gửi là 0.2 TON
-    sendToncoin(amountToSend); // Kiểm tra và tiến hành thanh toán
+    const amountToSend = 0.2;
+    sendToncoin(amountToSend);
   });
 });
 
-// Khi trang được tải xong, kiểm tra xem ticket có tồn tại trong Cloud Firestore không
+//
 window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
@@ -431,6 +417,3 @@ window.addEventListener("load", async () => {
     // document.getElementById("ticket").innerText = "No ticket available.";
   }
 });
-
-// Ví dụ: đếm ngược đến ngày 31 tháng 12, 2024
-// console.log(countdown("December 31, 2024 23:59:59"));
