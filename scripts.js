@@ -391,15 +391,15 @@ if (user) {
 
 //
 document.addEventListener("DOMContentLoaded", async () => {
-  // move();
-  navigateTo("home");
+  move();
+  // navigateTo("home");
   countdown("October 17, 2024 23:59:59");
   // Init TWA
   Telegram.WebApp.ready();
   Telegram.WebApp.expand(); // Mini App is expanded to the maximum height
 
   document.getElementById("getTicketButton").addEventListener("click", () => {
-    const amountToSend = 0.2;
+    const amountToSend = 2;
     sendToncoin(amountToSend);
   });
 });
