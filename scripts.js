@@ -441,6 +441,8 @@ window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
+    console.log(userData.ticket);
+
     displayTicket(userData.ticket);
     document.getElementById("getTicketButton").style.display = "none";
     document.getElementById("countdown").style.display = "none";
