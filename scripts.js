@@ -361,9 +361,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   Telegram.WebApp.ready();
   Telegram.WebApp.expand(); // Mini App is expanded to the maximum height
 
-  move();
+  // move();
 
-  // navigateTo("home");
+  navigateTo("home");
   countdown("October 17, 2024 23:59:59");
 
   if (user.username) {
@@ -432,12 +432,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   document.getElementById("getTicketButton").addEventListener("click", () => {
-    const amountToSend = 2;
+    const amountToSend = 1;
     sendToncoin(amountToSend);
   });
 });
 
-//
 window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
