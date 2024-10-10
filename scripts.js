@@ -217,13 +217,12 @@ function maskTicket(ticket) {
   return ticket[0] + "****" + ticket[ticket.length - 1];
 }
 
-// Hàm để hiển thị ticket với nút toggle
+//
 function displayTicket(ticket) {
   document.getElementById("ticket").style.display = "block";
   document.getElementById("ticketSub").style.display = "block";
-  console.log("trong hàm dis: ", ticket);
 
-  //xu ly nut copy ticket code
+  //button copy ticket code
   const copyTicketCode = document.getElementById("copyTicketCode");
   const copyTicketCodePopup = document.getElementById("copyTicketCodePopup");
 
@@ -249,16 +248,16 @@ function displayTicket(ticket) {
   document.getElementById("ticket").innerText = "";
   const ticketElement = document.getElementById("ticket");
   const ticketText = document.createElement("span");
-  const toggleIcon = document.createElement("i"); // Sử dụng thẻ <i> cho biểu tượng Font Awesome
+  const toggleIcon = document.createElement("i");
   let isMasked = true;
 
   const updateTicketDisplay = () => {
     ticketText.innerText = `${isMasked ? maskTicket(ticket) : ticket}`;
-    toggleIcon.className = isMasked ? "fas fa-eye" : "fas fa-eye-slash"; // Sử dụng Font Awesome classes
+    toggleIcon.className = isMasked ? "fas fa-eye" : "fas fa-eye-slash";
   };
 
   toggleIcon.style.cursor = "pointer";
-  toggleIcon.style.marginRight = "10px"; // Thêm khoảng cách giữa text và biểu tượng
+  toggleIcon.style.marginRight = "10px";
   toggleIcon.addEventListener("click", () => {
     isMasked = !isMasked;
     updateTicketDisplay();
@@ -441,8 +440,6 @@ window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
-    console.log("phia duoi:", userData.ticket);
-
     displayTicket(userData.ticket);
     document.getElementById("getTicketButton").style.display = "none";
     document.getElementById("countdown").style.display = "none";
