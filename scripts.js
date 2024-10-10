@@ -366,14 +366,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   // navigateTo("home");
   countdown("October 17, 2024 23:59:59");
 
-  document.getElementById("getTicketButton").addEventListener("click", () => {
-    const amountToSend = 2;
-    sendToncoin(amountToSend);
-  });
-});
-
-//
-window.addEventListener("load", async () => {
   if (user.username) {
     const formattedUserName = formatUserName(user.username);
     const formattedUserId = formatUserId(user.id);
@@ -439,6 +431,14 @@ window.addEventListener("load", async () => {
     document.getElementById("copyIcon").style.display = "none";
   }
 
+  document.getElementById("getTicketButton").addEventListener("click", () => {
+    const amountToSend = 2;
+    sendToncoin(amountToSend);
+  });
+});
+
+//
+window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
