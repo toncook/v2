@@ -11,12 +11,12 @@ import {
 // CONFIGURATION
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyChVruONuXi2k3VR5DF40N8pWMZXWYLxtc",
-  authDomain: "koocton.firebaseapp.com",
-  projectId: "koocton",
-  storageBucket: "koocton.appspot.com",
-  messagingSenderId: "878882645381",
-  appId: "1:878882645381:web:d0d01180ef9ae8935550ec",
+  apiKey: "AIzaSyCtOmvddfLgj1VqXpLStkujqIQPYqvHmXg",
+  authDomain: "toncookv2.firebaseapp.com",
+  projectId: "toncookv2",
+  storageBucket: "toncookv2.appspot.com",
+  messagingSenderId: "47210407596",
+  appId: "1:47210407596:web:5c8e654b5629143b962109",
 };
 
 // INITIATION
