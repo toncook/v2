@@ -374,7 +374,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 //
 window.addEventListener("load", async () => {
-  if (user) {
+  if (user.username) {
     const formattedUserName = formatUserName(user.username);
     const formattedUserId = formatUserId(user.id);
 
@@ -404,10 +404,41 @@ window.addEventListener("load", async () => {
         });
     });
   } else {
+    // const formattedUserName = formatUserName(user.username);
+    const formattedUserId = formatUserId(user.id);
+
+    document.getElementById(
+      "userInfo"
+    ).innerHTML = `... (Id:<strong>${formattedUserId}</strong>)`;
+
+    const copyIcon = document.getElementById("copyIcon");
+    const copyPopup = document.getElementById("copyPopup");
+
+    copyIcon.addEventListener("click", () => {
+      // Copy user ID to clipboard
+      navigator.clipboard
+        .writeText(user.id.toString())
+        .then(() => {
+          // Show tooltip
+          copyPopup.style.visibility = "visible";
+          copyPopup.style.opacity = 1;
+          // Hide tooltip after 2 seconds
+          setTimeout(() => {
+            copyPopup.style.visibility = "hidden";
+            copyPopup.style.opacity = 0;
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    });
+  }
+  if (!user) {
     document.getElementById("userInfo").innerText =
       "User information not found";
     document.getElementById("copyIcon").style.display = "none";
   }
+
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
@@ -416,6 +447,5 @@ window.addEventListener("load", async () => {
     document.getElementById("countdown").style.display = "none";
   } else {
     console.log("No such user!");
-    // document.getElementById("ticket").innerText = "No ticket available.";
   }
 });
