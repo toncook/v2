@@ -217,12 +217,12 @@ function maskTicket(ticket) {
   return ticket[0] + "****" + ticket[ticket.length - 1];
 }
 
-// Function to display the ticket with toggle button
+// Hàm để hiển thị ticket với nút toggle
 function displayTicket(ticket) {
   document.getElementById("ticket").style.display = "block";
   document.getElementById("ticketSub").style.display = "block";
 
-  //button copy ticket code
+  //xu ly nut copy ticket code
   const copyTicketCode = document.getElementById("copyTicketCode");
   const copyTicketCodePopup = document.getElementById("copyTicketCodePopup");
 
@@ -245,27 +245,27 @@ function displayTicket(ticket) {
       });
   });
 
-  // document.getElementById("ticket").innerText = "";
+  document.getElementById("ticket").innerText = "";
   const ticketElement = document.getElementById("ticket");
   const ticketText = document.createElement("span");
-  const toggleIcon = document.createElement("i");
+  const toggleIcon = document.createElement("i"); // Sử dụng thẻ <i> cho biểu tượng Font Awesome
   let isMasked = true;
 
   const updateTicketDisplay = () => {
     ticketText.innerText = `${isMasked ? maskTicket(ticket) : ticket}`;
-    toggleIcon.className = isMasked ? "fas fa-eye" : "fas fa-eye-slash";
-
-    toggleIcon.style.cursor = "pointer";
-    toggleIcon.style.marginRight = "10px";
-    toggleIcon.addEventListener("click", () => {
-      isMasked = !isMasked;
-      updateTicketDisplay();
-    });
-
-    updateTicketDisplay();
-    ticketElement.appendChild(toggleIcon);
-    ticketElement.appendChild(ticketText);
+    toggleIcon.className = isMasked ? "fas fa-eye" : "fas fa-eye-slash"; // Sử dụng Font Awesome classes
   };
+
+  toggleIcon.style.cursor = "pointer";
+  toggleIcon.style.marginRight = "10px"; // Thêm khoảng cách giữa text và biểu tượng
+  toggleIcon.addEventListener("click", () => {
+    isMasked = !isMasked;
+    updateTicketDisplay();
+  });
+
+  updateTicketDisplay();
+  ticketElement.appendChild(toggleIcon);
+  ticketElement.appendChild(ticketText);
 }
 
 // Function to display one section and hide all other sections
@@ -354,6 +354,74 @@ function formatUserId(userId) {
   return userIdStr;
 }
 
+if (!user) {
+  document.getElementById("userInfo").innerText = "User information not found";
+  document.getElementById("copyIcon").style.display = "none";
+} else if (user.username) {
+  const formattedUserName = formatUserName(user.username);
+  const formattedUserId = formatUserId(user.id);
+
+  document.getElementById(
+    "userInfo"
+  ).innerHTML = `${formattedUserName} (Id:<strong>${formattedUserId}</strong>)`;
+
+  const copyIcon = document.getElementById("copyIcon");
+  const copyPopup = document.getElementById("copyPopup");
+
+  copyIcon.addEventListener("click", () => {
+    // Copy user ID to clipboard
+    navigator.clipboard
+      .writeText(user.id.toString())
+      .then(() => {
+        // Show tooltip
+        copyPopup.style.visibility = "visible";
+        copyPopup.style.opacity = 1;
+        // Hide tooltip after 2 seconds
+        setTimeout(() => {
+          copyPopup.style.visibility = "hidden";
+          copyPopup.style.opacity = 0;
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  });
+} else {
+  // const formattedUserName = formatUserName(user.username);
+  const formattedUserId = formatUserId(user.id);
+
+  document.getElementById(
+    "userInfo"
+  ).innerHTML = `... (Id:<strong>${formattedUserId}</strong>)`;
+
+  const copyIcon = document.getElementById("copyIcon");
+  const copyPopup = document.getElementById("copyPopup");
+
+  copyIcon.addEventListener("click", () => {
+    // Copy user ID to clipboard
+    navigator.clipboard
+      .writeText(user.id.toString())
+      .then(() => {
+        // Show tooltip
+        copyPopup.style.visibility = "visible";
+        copyPopup.style.opacity = 1;
+        // Hide tooltip after 2 seconds
+        setTimeout(() => {
+          copyPopup.style.visibility = "hidden";
+          copyPopup.style.opacity = 0;
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy text: ", err);
+      });
+  });
+}
+
+document.getElementById("getTicketButton").addEventListener("click", () => {
+  const amountToSend = 1;
+  sendToncoin(amountToSend);
+});
+
 // MAIN RUN
 
 //
@@ -366,76 +434,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   navigateTo("home");
   countdown("October 17, 2024 23:59:59");
-
-  if (user.username) {
-    const formattedUserName = formatUserName(user.username);
-    const formattedUserId = formatUserId(user.id);
-
-    document.getElementById(
-      "userInfo"
-    ).innerHTML = `${formattedUserName} (Id:<strong>${formattedUserId}</strong>)`;
-
-    const copyIcon = document.getElementById("copyIcon");
-    const copyPopup = document.getElementById("copyPopup");
-
-    copyIcon.addEventListener("click", () => {
-      // Copy user ID to clipboard
-      navigator.clipboard
-        .writeText(user.id.toString())
-        .then(() => {
-          // Show tooltip
-          copyPopup.style.visibility = "visible";
-          copyPopup.style.opacity = 1;
-          // Hide tooltip after 2 seconds
-          setTimeout(() => {
-            copyPopup.style.visibility = "hidden";
-            copyPopup.style.opacity = 0;
-          }, 2000);
-        })
-        .catch((err) => {
-          console.error("Failed to copy text: ", err);
-        });
-    });
-  } else {
-    // const formattedUserName = formatUserName(user.username);
-    const formattedUserId = formatUserId(user.id);
-
-    document.getElementById(
-      "userInfo"
-    ).innerHTML = `... (Id:<strong>${formattedUserId}</strong>)`;
-
-    const copyIcon = document.getElementById("copyIcon");
-    const copyPopup = document.getElementById("copyPopup");
-
-    copyIcon.addEventListener("click", () => {
-      // Copy user ID to clipboard
-      navigator.clipboard
-        .writeText(user.id.toString())
-        .then(() => {
-          // Show tooltip
-          copyPopup.style.visibility = "visible";
-          copyPopup.style.opacity = 1;
-          // Hide tooltip after 2 seconds
-          setTimeout(() => {
-            copyPopup.style.visibility = "hidden";
-            copyPopup.style.opacity = 0;
-          }, 2000);
-        })
-        .catch((err) => {
-          console.error("Failed to copy text: ", err);
-        });
-    });
-  }
-  if (!user) {
-    document.getElementById("userInfo").innerText =
-      "User information not found";
-    document.getElementById("copyIcon").style.display = "none";
-  }
-
-  document.getElementById("getTicketButton").addEventListener("click", () => {
-    const amountToSend = 1;
-    sendToncoin(amountToSend);
-  });
 });
 
 window.addEventListener("load", async () => {
