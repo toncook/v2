@@ -1,0 +1,465 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+/* Meyer CSS Reset v2.0 | 20110126 */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  font-family: "Outfit", sans-serif;
+  /* Các thuộc tính hình nền mới */
+  background-image: url('./assets/bg2.webp');
+  /* Đặt đường dẫn tới hình nền của bạn */
+  background-size: 100% auto;
+  /* Đảm bảo hình nền bao phủ toàn bộ màn hình */
+  background-position: top center;
+  /* Căn giữa hình nền */
+  background-repeat: no-repeat;
+  /* Không lặp lại hình nền */
+  height: 100vh;
+  /* Chiều cao toàn màn hình */
+  overflow: hidden;
+  /* Ẩn cuộn để chỉ hiển thị hình nền */
+  position: relative;
+}
+
+/* Some basic CSS overrides */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+/* End basic CSS override */
+.hidden {
+  display: none;
+}
+
+strong, b {
+  font-weight: bold;
+  /* Đảm bảo chữ đậm */
+  color: black;
+  /* Đặt màu chữ nếu cần */
+}
+
+#container {
+  width: 100vw;
+  height: 100vh;
+  /* Căn giữa container theo chiều ngang */
+  margin: 0 auto;
+  /* Khoảng cách bên trong container */
+  padding: 0px;
+  border: 0px solid #2300e7;
+  /* Đường viền (có thể tùy chỉnh) */
+  border-radius: 0px;
+  /* Bo góc (có thể tùy chỉnh) */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Đổ bóng nhẹ */
+
+}
+
+#myProgress {
+  width: 70%;
+  margin-top: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin: 0 auto; */
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 0%;
+  height: 25px;
+  line-height: 25px;
+  background-color: #04AA6D;
+  text-align: center;
+  color: white;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(#000000, 0.25);
+}
+
+.modal-container {
+  max-height: 90vh;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 30px 0 rgba(#000, 0.25);
+
+  @media (max-width: 600px) {
+    width: 90%;
+  }
+}
+
+.modal-container-header {
+  padding: 10px 28px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px
+}
+
+#linkContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+}
+
+#linkContainer a {
+  text-decoration: none;
+}
+
+.modal-container-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  font-weight: 700;
+  font-size: 1.125;
+}
+
+.modal-container-body {
+  padding: 12px 24px 51px;
+  overflow-y: auto;
+}
+
+.modal-container-body p {
+  text-align: justify;
+}
+
+.rtf {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    line-height: 1.125;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  &>*+* {
+    margin-top: 0.5em;
+  }
+
+  &>*+ :is(h1, h2, h3) {
+    margin-top: 0.4em;
+  }
+
+  &> :is(h1, h2, h3)+* {
+    margin-top: 0em;
+  }
+
+  ul,
+  ol {
+    margin-left: 20px;
+    list-style-position: inside;
+    text-align: justify;
+  }
+
+  ol {
+    list-style: numeric;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  a {
+    text-decoration: none;
+    /* Loại bỏ gạch chân */
+    color: blue;
+    /* Đặt màu chữ là màu xanh */
+  }
+}
+
+.modal-container-footer {
+  padding: 2px 10px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+  gap: 12px;
+  position: relative;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -51px;
+    left: 24px;
+    right: 24px;
+    height: 50px;
+    flex-shrink: 0;
+    background-image: linear-gradient(to top, rgba(#fff, 0.75), transparent);
+    pointer-events: none;
+  }
+}
+
+.first {
+  min-height: 78px;
+}
+
+.second {
+  justify-content: center;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s ease;
+
+  &.is-primary {
+    background-color: #007FFF;
+    color: #fff;
+  }
+
+  &.is-disable {
+    background-color: #b9b9b9f3;
+    color: #fff;
+    cursor: not-allowed;
+  }
+}
+
+.button .icon {
+  margin-right: 6px;
+}
+
+#userInfoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+#userInfo {
+  display: inline-flex;
+  align-items: center;
+  /* Căn giữa nội dung theo chiều dọc */
+  text-align: center;
+  font-size: small;
+}
+
+#countdown {
+  display: inline-flex;
+  margin-top: 2px;
+
+  align-items: center;
+  /* Căn giữa nội dung theo chiều dọc */
+  text-align: center;
+  font-size: small;
+}
+
+.tonConnect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#copyIcon, #copyTicketCode {
+  display: inline-flex;
+  align-items: center;
+  /* Căn giữa nội dung theo chiều dọc */
+  color: #28a745;
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  /* Đặt tooltip phía trên biểu tượng */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  /* Mũi tên phía dưới tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.tooltip.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#copyIcon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+#walletInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3px;
+  font-size: small;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 4px; */
+  min-width: 45%;
+  position: relative;
+  vertical-align: top;
+}
+
+.right-column {
+  min-width: 55%;
+  position: relative;
+  vertical-align: top;
+}
+
+#getTicketButton {
+  margin-top: 7px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ticket {
+  display: none;
+  min-width: 103px;
+  margin-top: 7px;
+  margin-left: auto;
+  margin-right: auto;
+  /* align-items: center; */
+  padding: 11.5px 12px;
+  background-color: #f8a82fff;
+  /* Màu nền */
+  color: white;
+  /* Màu chữ */
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  align-items: center;
+  /* Bo góc */
+  border: none;
+}
+
+#ticket i {
+  float: left;
+}
+
+#ticket span {
+  display: block;
+  /* margin-left: [width of i + desired spacing]; */
+}
+
+#ticketSub {
+  display: none;
+  margin-top: 2px;
+  /* padding-top: 5px; */
+  /* align-items: center; */
+  /* Căn giữa nội dung theo chiều dọc */
+  text-align: center;
+  font-size: small;
+}
