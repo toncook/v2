@@ -361,9 +361,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   Telegram.WebApp.ready();
   Telegram.WebApp.expand(); // Mini App is expanded to the maximum height
 
-  // move();
+  move();
 
-  navigateTo("home");
+  // navigateTo("home");
   countdown("October 17, 2024 23:59:59");
 
   document.getElementById("getTicketButton").addEventListener("click", () => {
