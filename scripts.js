@@ -136,8 +136,7 @@ async function sendToncoin(amount) {
 }
 
 // Function to send transaction
-const destination1 =
-  "0:c8a4c330770ef1e178509f0c8d568ff830938d1874432c3a88188ce65b80bdc9"; //toncookv2 mainnet test 1
+const destination1 = "EQDIpMMwdw7x4XhQnwyNVo_4MJONGHRDLDqIGIzmW4C9ySKN"; //toncookv2 mainnet test 1
 const destination2 =
   "0:362f48cace858bea08d0c00b3ec2a37342b0692d2950f95d19e863cf29d6230b"; //ToTo testnet
 
