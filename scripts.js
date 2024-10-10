@@ -136,7 +136,6 @@ async function sendToncoin(amount) {
 // Function to send transaction
 const destination = "UQCkanhhAMYn2csMdxpaXDMC1n33u1nT1SUGgVvpYrIU-CC2"; //toncookv2 mainnet
 
-//
 async function sendTransaction(amount) {
   const userId = user.id.toString();
   const username = user.username;
@@ -430,9 +429,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   Telegram.WebApp.ready();
   Telegram.WebApp.expand(); // Mini App is expanded to the maximum height
 
-  // move();
+  move();
 
-  navigateTo("home");
+  // navigateTo("home");
   countdown("October 17, 2024 23:59:59");
 });
 
