@@ -222,7 +222,7 @@ function displayTicket(ticket) {
   document.getElementById("ticket").style.display = "block";
   document.getElementById("ticketSub").style.display = "block";
 
-  //xu ly nut copy ticket code
+  //button copy ticket code
   const copyTicketCode = document.getElementById("copyTicketCode");
   const copyTicketCodePopup = document.getElementById("copyTicketCodePopup");
 
@@ -245,7 +245,7 @@ function displayTicket(ticket) {
       });
   });
 
-  document.getElementById("ticket").innerText = "";
+  // document.getElementById("ticket").innerText = "";
   const ticketElement = document.getElementById("ticket");
   const ticketText = document.createElement("span");
   const toggleIcon = document.createElement("i");
@@ -267,6 +267,7 @@ function displayTicket(ticket) {
     ticketElement.appendChild(ticketText);
   };
 }
+
 // Function to display one section and hide all other sections
 function navigateTo(sectionId) {
   document.querySelectorAll("#container > div").forEach((div) => {
@@ -441,8 +442,6 @@ window.addEventListener("load", async () => {
   const userId = user.id.toString();
   const userData = await checkUserExists(userId);
   if (userData) {
-    console.log(userData.ticket);
-
     displayTicket(userData.ticket);
     document.getElementById("getTicketButton").style.display = "none";
     document.getElementById("countdown").style.display = "none";
