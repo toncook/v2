@@ -428,5 +428,9 @@ window.addEventListener("load", async () => {
     document.getElementById("countdown").style.display = "none";
   } else {
     console.log("No such user!");
+    // document.getElementById("ticket").innerText = "No ticket available.";
   }
 });
+
+// Ví dụ: đếm ngược đến ngày 31 tháng 12, 2024
+// console.log(countdown("December 31, 2024 23:59:59"));
